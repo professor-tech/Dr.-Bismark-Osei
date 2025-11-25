@@ -182,7 +182,7 @@
             background-color: var(--secondary);
         }
         
-        /* About Section */
+        /* About Section - FIXED */
         .about-content {
             display: flex;
             align-items: center;
@@ -194,12 +194,17 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            max-width: 100%;
+            height: auto;
         }
         
         .about-image img {
             width: 100%;
             height: auto;
             display: block;
+            object-fit: cover;
+            object-position: top center;
         }
         
         .about-text {
@@ -555,10 +560,15 @@
             color: #aaa;
         }
         
-        /* Responsive */
+        /* Responsive - FIXED */
         @media (max-width: 992px) {
             .about-content {
                 flex-direction: column;
+            }
+            
+            .about-image {
+                width: 80%;
+                margin: 0 auto;
             }
             
             .contact-container {
@@ -579,6 +589,20 @@
         @media (max-width: 768px) {
             nav ul {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 1rem 0;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav ul li {
+                margin: 0;
+                text-align: center;
+                padding: 0.5rem 0;
             }
             
             .mobile-menu {
@@ -589,8 +613,42 @@
                 font-size: 2.5rem;
             }
             
+            .about-image {
+                width: 100%;
+            }
+            
             .videos-container, .books-container {
                 grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .about-image {
+                width: 100%;
+            }
+            
+            .prayer-card {
+                padding: 1.5rem;
+            }
+            
+            .prayer-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -633,16 +691,14 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About Section - FIXED -->
     <section id="about">
         <div class="container">
             <h2 class="section-title">About Dr. Bismark Osei</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <!-- Placeholder for image -->
-                    <div style="width:100%; height:400px; background-color:#e9ecef; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:1.5rem;">
-                     <img src="Bis/mark.jpg" alt="Dr. Bismark Osei Photo" />
-                    </div>
+                    <!-- Replaced placeholder with actual image implementation -->
+                    <img src="Bis/mark.jpg" alt="Dr. Bismark Osei Photo" />
                 </div>
                 <div class="about-text">
                     <h3>Economist & Spiritual Leader</h3>
@@ -690,9 +746,7 @@
                 <!-- Video 1 -->
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <div style="width:100%; height:100%; background-color:#e9ecef; display:flex; align-items:center; justify-content:center; color:var(--primary);">
-                            Video Thumbnail
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Video Thumbnail">
                         <a href="https://youtu.be/4ybx-yXBtcg?si=G8MEfdV6rT5rQ05w" target="_blank" class="video-play">
                             <i class="fas fa-play"></i>
                         </a>
@@ -710,9 +764,7 @@
                 <!-- Video 2 -->
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <div style="width:100%; height:100%; background-color:#e9ecef; display:flex; align-items:center; justify-content:center; color:var(--primary);">
-                            Video Thumbnail
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80" alt="Video Thumbnail">
                         <a href="#" class="video-play">
                             <i class="fas fa-play"></i>
                         </a>
@@ -730,9 +782,7 @@
                 <!-- Video 3 -->
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <div style="width:100%; height:100%; background-color:#e9ecef; display:flex; align-items:center; justify-content:center; color:var(--primary);">
-                            Video Thumbnail
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Video Thumbnail">
                         <a href="#" class="video-play">
                             <i class="fas fa-play"></i>
                         </a>
@@ -943,8 +993,8 @@
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').style.display = 
-                document.querySelector('nav ul').style.display === 'flex' ? 'none' : 'flex';
+            const navMenu = document.querySelector('nav ul');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
         });
         
         // Smooth scrolling for navigation links
@@ -965,6 +1015,19 @@
                     document.querySelector('nav ul').style.display = 'none';
                 }
             });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navMenu = document.querySelector('nav ul');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (window.innerWidth <= 768 && 
+                navMenu.style.display === 'flex' && 
+                !navMenu.contains(e.target) && 
+                !mobileMenu.contains(e.target)) {
+                navMenu.style.display = 'none';
+            }
         });
     </script>
 </body>
