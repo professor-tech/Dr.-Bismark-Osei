@@ -343,6 +343,79 @@
             margin-top: 1rem;
         }
         
+        /* YouTube Channels Section */
+        .channels-section {
+            background-color: var(--light);
+        }
+        
+        .channels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .channel-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .channel-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .channel-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .channel-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .channel-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+        
+        .channel-card:hover .channel-play {
+            background-color: var(--accent);
+        }
+        
+        .channel-info {
+            padding: 1.5rem;
+        }
+        
+        .channel-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .channel-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        
         /* Books Section */
         .books-section {
             background-color: var(--light);
@@ -617,7 +690,7 @@
                 width: 100%;
             }
             
-            .videos-container, .books-container {
+            .videos-container, .channels-container, .books-container {
                 grid-template-columns: 1fr;
             }
         }
@@ -670,6 +743,7 @@
                         <li><a href="#about">About</a></li>
                         <li><a href="#prayer">Prayer Meetings</a></li>
                         <li><a href="#videos">Videos</a></li>
+                        <li><a href="#channels">YouTube Channels</a></li>
                         <li><a href="#books">E-Books</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
@@ -803,6 +877,104 @@
                 <a href="https://www.youtube.com/@BismarkOsei" target="_blank" class="cta-button">
                     <i class="fab fa-youtube"></i> View More on YouTube
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Channels Section -->
+    <section class="channels-section" id="channels">
+        <div class="container">
+            <h2 class="section-title">YouTube Channels</h2>
+            <div class="channels-container">
+                <!-- Channel 1 -->
+                <div class="channel-card">
+                    <div class="channel-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Entrepreneurship Lectures">
+                        <a href="https://www.youtube.com/watch?v=6c3AKYp65aw&list=PL2gB5fJVNAQgqapdBNn9b6jg5sXJDk5MT" target="_blank" class="channel-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="channel-info">
+                        <h3>Entrepreneurship Lectures</h3>
+                        <p>Learn business strategies, startup fundamentals, and entrepreneurial mindset development.</p>
+                        <div class="channel-meta">
+                            <span><i class="fas fa-video"></i> Playlist</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Channel 2 -->
+                <div class="channel-card">
+                    <div class="channel-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Motivational Messages">
+                        <a href="https://www.youtube.com/watch?v=-3mvNryjRXY&list=PL2gB5fJVNAQhR6FY3x9Qy63IYpvivSeK7" target="_blank" class="channel-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="channel-info">
+                        <h3>Motivational Messages</h3>
+                        <p>Inspirational talks to uplift your spirit and empower you to achieve your goals.</p>
+                        <div class="channel-meta">
+                            <span><i class="fas fa-video"></i> Playlist</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Channel 3 -->
+                <div class="channel-card">
+                    <div class="channel-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Marriage Messages">
+                        <a href="https://www.youtube.com/watch?v=InoyDg1OOzU&list=PL2gB5fJVNAQhHD4qLVhdgLzSkakKmTcO1" target="_blank" class="channel-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="channel-info">
+                        <h3>Your Marriage Will Be A State of Mind to the World</h3>
+                        <p>Biblical principles for building strong, God-centered marriages that inspire others.</p>
+                        <div class="channel-meta">
+                            <span><i class="fas fa-video"></i> Playlist</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Channel 4 -->
+                <div class="channel-card">
+                    <div class="channel-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Economics Lectures">
+                        <a href="https://www.youtube.com/watch?v=XANJmLVBxRU" target="_blank" class="channel-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="channel-info">
+                        <h3>Economics Lectures</h3>
+                        <p>Understanding economic principles, market dynamics, and financial strategies.</p>
+                        <div class="channel-meta">
+                            <span><i class="fas fa-video"></i> Single Video</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Channel 5 -->
+                <div class="channel-card">
+                    <div class="channel-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="River From Temple Sermons">
+                        <a href="https://www.youtube.com/watch?v=EFzaDlamAgQ&list=PL2gB5fJVNAQgP5bWjRE_5jOYri2Ops0PP" target="_blank" class="channel-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="channel-info">
+                        <h3>River From Temple Sermons</h3>
+                        <p>Spiritual teachings and sermons focused on divine flow and transformation.</p>
+                        <div class="channel-meta">
+                            <span><i class="fas fa-video"></i> Playlist</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -982,6 +1154,7 @@
                             <li><a href="#about">About</a></li>
                             <li><a href="#prayer">Prayer Meetings</a></li>
                             <li><a href="#videos">Videos</a></li>
+                            <li><a href="#channels">YouTube Channels</a></li>
                             <li><a href="#books">E-Books</a></li>
                         </ul>
                     </div>
