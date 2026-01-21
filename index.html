@@ -20,6 +20,9 @@
             --light: #f8f9fa;
             --dark: #343a40;
             --gray: #6c757d;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
         
         body {
@@ -27,11 +30,13 @@
             line-height: 1.6;
             color: var(--dark);
             background-color: #f5f7fa;
+            overflow-x: hidden;
         }
         
         h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
             margin-bottom: 1rem;
+            font-weight: 700;
         }
         
         .container {
@@ -46,10 +51,11 @@
             background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
             color: white;
             padding: 1rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: var(--transition);
         }
         
         .header-content {
@@ -62,11 +68,23 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: translateY(-2px);
         }
         
         .logo-icon {
             font-size: 2rem;
             color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .logo-text {
@@ -91,7 +109,7 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: var(--transition);
             padding: 5px 0;
             position: relative;
         }
@@ -108,7 +126,7 @@
             width: 0;
             height: 2px;
             background-color: var(--secondary);
-            transition: width 0.3s;
+            transition: width 0.3s ease;
         }
         
         nav ul li a:hover::after {
@@ -119,70 +137,111 @@
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu:hover {
+            color: var(--secondary);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(26, 75, 140, 0.8), rgba(13, 43, 82, 0.9)), url('https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(26, 75, 140, 0.85), rgba(13, 43, 82, 0.95)), 
+                        url('https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
-            padding: 5rem 0;
+            padding: 6rem 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+            pointer-events: none;
         }
         
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 1s ease 0.3s both;
+            opacity: 0.9;
         }
         
         .cta-button {
             display: inline-block;
-            background-color: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary) 0%, #e6c12e 100%);
             color: var(--dark);
-            padding: 12px 30px;
+            padding: 15px 35px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease 0.6s both;
         }
         
         .cta-button:hover {
-            background-color: #e6c12e;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            color: var(--dark);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-2px);
         }
         
         /* Sections */
         section {
             padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
             position: relative;
+            font-size: 2.5rem;
         }
         
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
-            height: 3px;
-            background-color: var(--secondary);
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
         }
         
-        /* About Section - FIXED */
+        /* About Section */
         .about-content {
             display: flex;
             align-items: center;
@@ -191,12 +250,27 @@
         
         .about-image {
             flex: 1;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-hover);
             position: relative;
-            max-width: 100%;
-            height: auto;
+            transform: rotate(-2deg);
+            transition: var(--transition);
+        }
+        
+        .about-image:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(26, 75, 140, 0.1), rgba(212, 175, 55, 0.1));
+            z-index: 1;
         }
         
         .about-image img {
@@ -205,6 +279,11 @@
             display: block;
             object-fit: cover;
             object-position: top center;
+            transition: var(--transition);
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
         }
         
         .about-text {
@@ -214,45 +293,84 @@
         .about-text h3 {
             color: var(--primary);
             margin-bottom: 1rem;
+            font-size: 1.8rem;
         }
         
         .about-text p {
             margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
         
         /* Prayer Section */
         .prayer-section {
-            background-color: var(--light);
+            background: linear-gradient(135deg, var(--light) 0%, #e9ecef 100%);
+            position: relative;
+        }
+        
+        .prayer-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
         }
         
         .prayer-card {
             background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: var(--shadow-hover);
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .prayer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .prayer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
         }
         
         .prayer-title {
             color: var(--accent);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
         }
         
         .prayer-time {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
             color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            margin: 1.5rem auto;
             display: inline-block;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .prayer-time:hover {
+            transform: scale(1.05);
         }
         
         .prayer-details {
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             text-align: left;
+            background: rgba(26, 75, 140, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
         }
         
         .prayer-details ul {
@@ -261,9 +379,10 @@
         }
         
         .prayer-details li {
-            margin-bottom: 0.8rem;
-            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
             position: relative;
+            line-height: 1.8;
         }
         
         .prayer-details li::before {
@@ -272,30 +391,47 @@
             left: 0;
             color: var(--secondary);
             font-weight: bold;
+            font-size: 1.2rem;
         }
         
         /* Videos Section */
         .videos-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
         
         .video-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
         }
         
         .video-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .new-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--accent) 0%, #d43c3c 100%);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+            animation: pulse 2s infinite;
         }
         
         .video-thumbnail {
             position: relative;
-            height: 180px;
+            height: 200px;
             overflow: hidden;
         }
         
@@ -303,6 +439,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.1);
         }
         
         .video-play {
@@ -310,29 +451,34 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            width: 60px;
-            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s;
+            font-size: 1.8rem;
+            transition: var(--transition);
+            z-index: 1;
+            opacity: 0.9;
         }
         
         .video-card:hover .video-play {
-            background-color: var(--accent);
+            background: var(--accent);
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
         }
         
         .video-info {
-            padding: 1.5rem;
+            padding: 1.8rem;
         }
         
         .video-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
         }
         
         .video-meta {
@@ -340,35 +486,38 @@
             justify-content: space-between;
             color: var(--gray);
             font-size: 0.9rem;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
         }
         
         /* YouTube Channels Section */
         .channels-section {
-            background-color: var(--light);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
         
         .channels-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
         
         .channel-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
         }
         
         .channel-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
         }
         
         .channel-thumbnail {
             position: relative;
-            height: 180px;
+            height: 200px;
             overflow: hidden;
         }
         
@@ -376,6 +525,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .channel-card:hover .channel-thumbnail img {
+            transform: scale(1.1);
         }
         
         .channel-play {
@@ -383,29 +537,33 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            width: 60px;
-            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s;
+            font-size: 1.8rem;
+            transition: var(--transition);
+            opacity: 0.9;
         }
         
         .channel-card:hover .channel-play {
-            background-color: var(--accent);
+            background: var(--accent);
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
         }
         
         .channel-info {
-            padding: 1.5rem;
+            padding: 1.8rem;
         }
         
         .channel-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
         }
         
         .channel-meta {
@@ -413,72 +571,86 @@
             justify-content: space-between;
             color: var(--gray);
             font-size: 0.9rem;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
         }
         
         /* Books Section */
         .books-section {
-            background-color: var(--light);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
         
         .books-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
         }
         
         .book-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
         }
         
         .book-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
         }
         
         .book-cover {
-            height: 300px;
-            background-color: #e9ecef;
+            height: 320px;
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 4rem;
+            font-size: 4.5rem;
+            transition: var(--transition);
+        }
+        
+        .book-card:hover .book-cover {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
+            color: white;
         }
         
         .book-info {
-            padding: 1.5rem;
+            padding: 1.8rem;
         }
         
         .book-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
         }
         
         .book-price {
             color: var(--secondary);
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin: 1rem 0;
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin: 1.2rem 0;
         }
         
         .book-btn {
             display: block;
             text-align: center;
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
             color: white;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
         
         .book-btn:hover {
-            background-color: #0d2b52;
+            background: linear-gradient(135deg, #0d2b52 0%, var(--primary) 100%);
+            color: white;
+            transform: translateY(-3px);
         }
         
         /* Contact Section */
@@ -494,80 +666,130 @@
         .contact-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .contact-item:hover {
+            background: rgba(26, 75, 140, 0.05);
+            transform: translateX(5px);
         }
         
         .contact-icon {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
             flex-shrink: 0;
+            font-size: 1.2rem;
         }
         
         .contact-form {
             flex: 1;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
         }
         
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
         }
         
         .form-control {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 14px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
             font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 75, 140, 0.1);
         }
         
         textarea.form-control {
-            min-height: 150px;
+            min-height: 160px;
             resize: vertical;
         }
         
         .submit-btn {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
+            padding: 15px 35px;
+            border-radius: 8px;
             font-family: 'Poppins', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
         }
         
         .submit-btn:hover {
-            background-color: #0d2b52;
+            background: linear-gradient(135deg, #0d2b52 0%, var(--primary) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(26, 75, 140, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background: linear-gradient(135deg, var(--dark) 0%, #212529 100%);
             color: white;
-            padding: 3rem 0 1.5rem;
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
         }
         
         .footer-content {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         
         .footer-logo {
             flex: 1;
+        }
+        
+        .footer-logo p {
+            margin-top: 1rem;
+            opacity: 0.8;
+            line-height: 1.8;
         }
         
         .footer-links {
@@ -578,8 +800,8 @@
         
         .footer-links h3 {
             color: var(--secondary);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
         }
         
         .footer-links ul {
@@ -587,53 +809,90 @@
         }
         
         .footer-links li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
         
         .footer-links a {
             color: #ddd;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: var(--transition);
+            display: inline-block;
         }
         
         .footer-links a:hover {
             color: var(--secondary);
+            transform: translateX(5px);
         }
         
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             color: white;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: var(--transition);
+            font-size: 1.2rem;
         }
         
         .social-links a:hover {
-            background-color: var(--secondary);
+            background: var(--secondary);
             color: var(--dark);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 1.5rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
             color: #aaa;
         }
         
-        /* Responsive - FIXED */
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+        
         @media (max-width: 992px) {
             .about-content {
                 flex-direction: column;
@@ -650,40 +909,65 @@
             
             .footer-content {
                 flex-direction: column;
-                gap: 2rem;
+                gap: 2.5rem;
             }
             
             .footer-links {
                 justify-content: flex-start;
-                gap: 3rem;
+                gap: 4rem;
+            }
+            
+            .hero {
+                padding: 4rem 0;
             }
         }
         
         @media (max-width: 768px) {
             nav ul {
                 display: none;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: 70px;
                 left: 0;
                 width: 100%;
-                background-color: var(--primary);
+                background: linear-gradient(135deg, var(--primary) 0%, #0d2b52 100%);
                 flex-direction: column;
-                padding: 1rem 0;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                padding: 1.5rem 0;
+                box-shadow: var(--shadow);
+                z-index: 999;
+                transition: var(--transition);
+                max-height: 0;
+                overflow: hidden;
+            }
+            
+            nav ul.active {
+                display: flex;
+                max-height: 500px;
             }
             
             nav ul li {
                 margin: 0;
                 text-align: center;
-                padding: 0.5rem 0;
+                padding: 0.8rem 0;
+                width: 100%;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 0.8rem 0;
+                width: 100%;
             }
             
             .mobile-menu {
                 display: block;
+                z-index: 1000;
             }
             
             .hero h1 {
                 font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
             }
             
             .about-image {
@@ -692,6 +976,15 @@
             
             .videos-container, .channels-container, .books-container {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .prayer-card {
+                padding: 2rem;
             }
         }
         
@@ -701,7 +994,7 @@
             }
             
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .hero p {
@@ -709,7 +1002,7 @@
             }
             
             section {
-                padding: 3rem 0;
+                padding: 3.5rem 0;
             }
             
             .about-image {
@@ -721,7 +1014,30 @@
             }
             
             .prayer-title {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .cta-button {
+                padding: 12px 25px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -738,7 +1054,7 @@
                     <div class="logo-text"><span>Bismark Osei</span></div>
                 </div>
                 <nav>
-                    <ul>
+                    <ul id="nav-menu">
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#prayer">Prayer Meetings</a></li>
@@ -748,7 +1064,7 @@
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
-                <div class="mobile-menu">
+                <div class="mobile-menu" id="mobile-menu">
                     <i class="fas fa-bars"></i>
                 </div>
             </div>
@@ -765,13 +1081,12 @@
         </div>
     </section>
 
-    <!-- About Section - FIXED -->
+    <!-- About Section -->
     <section id="about">
         <div class="container">
             <h2 class="section-title">About Bismark Osei</h2>
             <div class="about-content">
                 <div class="about-image">
-                    <!-- Replaced placeholder with actual image implementation -->
                     <img src="Bis/mark.jpg" alt="Bismark Osei Photo" />
                 </div>
                 <div class="about-text">
@@ -817,25 +1132,86 @@
     <section id="videos">
         <div class="container">
             <h2 class="section-title">Latest Videos</h2>
-             <div class="videos-container">
-     <!-- NEW VIDEO: Victory is your Name -->
-     <div class="video-card">
-         <div class="video-thumbnail">
-             <img src="Bis/time.jpg" alt="God is never late ">
-             <a href="https://youtu.be/sqe0wguoqLE?si=EpGiPlo3SJKoqI-x" target="_blank" class="video-play">
-                 <i class="fas fa-play"></i>
-             </a>
-         </div>
-         <div class="video-info">
-             <h3>God is never late</h3>
-             <p>Focus: Sermon | Duration: 30 minutes</p>
-              <span><i class="far fa-calendar"></i> New Release</span>
- <span><i class="fab fa-youtube"></i> YouTube</span>
- </div>
- </div>
- </div>
             <div class="videos-container">
-                <!-- NEW VIDEO: Victory is your Name -->
+                <!-- NEW VIDEO 1: The Prayer of Samson (Part 2) -->
+                <div class="video-card">
+                    <div class="new-badge">New Release</div>
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="The Prayer of Samson (Part 2)">
+                        <a href="https://youtu.be/LVO9LhEgJKA?si=Fsa6h46hE-NHZUGI" target="_blank" class="video-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3>The Prayer of Samson (Part 2)</h3>
+                        <p>Focus: Sermon | Duration: 30 minutes</p>
+                        <p>Please watch, subscribe and send your comments.</p>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> New Release</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NEW VIDEO 2: The Prayer of Samson (Part 1) -->
+                <div class="video-card">
+                    <div class="new-badge">New Release</div>
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="The Prayer of Samson (Part 1)">
+                        <a href="https://youtu.be/q2vIJzYQEuI?si=JrkUgzA06yPHFHuO" target="_blank" class="video-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3>The Prayer of Samson (Part 1)</h3>
+                        <p>Focus: Sermon | Duration: 30 minutes</p>
+                        <p>Please watch, subscribe and send your comments.</p>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> New Release</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NEW VIDEO 3: The discipline of self-measurements -->
+                <div class="video-card">
+                    <div class="new-badge">New Release</div>
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="The discipline of self-measurements">
+                        <a href="https://youtu.be/mCbmsWeYxIg?si=4t44SYQe8oeLEl-i" target="_blank" class="video-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3>The Discipline of Self-Measurements</h3>
+                        <p>Focus: Sermon | Duration: 30 minutes</p>
+                        <p>Please watch, subscribe and send your comments.</p>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> New Release</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Existing Video: God is never late -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="Bis/time.jpg" alt="God is never late">
+                        <a href="https://youtu.be/sqe0wguoqLE?si=EpGiPlo3SJKoqI-x" target="_blank" class="video-play">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3>God is never late</h3>
+                        <p>Focus: Sermon | Duration: 30 minutes</p>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> Recent</span>
+                            <span><i class="fab fa-youtube"></i> YouTube</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Existing Video: Victory is your Name -->
                 <div class="video-card">
                     <div class="video-thumbnail">
                         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Victory is your Name">
@@ -847,13 +1223,13 @@
                         <h3>Victory is your Name</h3>
                         <p>Focus: Sermon | Duration: 30 minutes</p>
                         <div class="video-meta">
-                            <span><i class="far fa-calendar"></i>Last week</span>
+                            <span><i class="far fa-calendar"></i> Last week</span>
                             <span><i class="fab fa-youtube"></i> YouTube</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Video 2: Empowerment Ministry of the Holy Spirit -->
+                <!-- Existing Video: Empowerment Ministry of the Holy Spirit -->
                 <div class="video-card">
                     <div class="video-thumbnail">
                         <img src="https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Empowerment Ministry of the Holy Spirit">
@@ -865,50 +1241,14 @@
                         <h3>Empowerment Ministry of the Holy Spirit</h3>
                         <p>Focus: Sermon | Duration: 30 minutes</p>
                         <div class="video-meta">
-                            <span><i class="far fa-calendar"></i> Early December update</span>
-                            <span><i class="fab fa-youtube"></i> YouTube</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 3 -->
-                <div class="video-card">
-                    <div class="video-thumbnail">
-                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Video Thumbnail">
-                        <a href="https://youtu.be/4ybx-yXBtcg?si=G8MEfdV6rT5rQ05w" target="_blank" class="video-play">
-                            <i class="fas fa-play"></i>
-                        </a>
-                    </div>
-                    <div class="video-info">
-                        <h3>You Are Still A Legend</h3>
-                        <p>Focus: Sermon | Duration: 30 minutes</p>
-                        <div class="video-meta">
-                            <span><i class="far fa-calendar"></i> 2 weeks ago</span>
-                            <span><i class="fab fa-youtube"></i> YouTube</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 4 -->
-                <div class="video-card">
-                    <div class="video-thumbnail">
-                        <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1165&q=80" alt="Video Thumbnail">
-                        <a href="https://youtu.be/4ybx-yXBtcg?si=G8MEfdV6rT5rQ05w" target="_blank" class="video-play">
-                            <i class="fas fa-play"></i>
-                        </a>
-                    </div>
-                    <div class="video-info">
-                        <h3>Economic Principles for Christian Living</h3>
-                        <p>Focus: Teaching | Duration: 45 minutes</p>
-                        <div class="video-meta">
-                            <span><i class="far fa-calendar"></i> 3 weeks ago</span>
+                            <span><i class="far fa-calendar"></i> Early December</span>
                             <span><i class="fab fa-youtube"></i> YouTube</span>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div style="text-align: center; margin-top: 2rem;">
+            <div style="text-align: center; margin-top: 3rem;">
                 <a href="https://www.youtube.com/@BismarkOsei" target="_blank" class="cta-button">
                     <i class="fab fa-youtube"></i> View More on YouTube
                 </a>
@@ -1139,28 +1479,40 @@
                 
                 <div class="contact-form">
                     <h3>Send a Message</h3>
-                    <form>
+                    <!-- FormSubmit integration -->
+                    <form action="https://formsubmit.co/bismarkosei84@yahoo.com" method="POST" id="contact-form">
+                        <!-- FormSubmit configuration -->
+                        <input type="hidden" name="_subject" value="New Message from Website Contact Form">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+                        
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" class="form-control" required>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Your Email</label>
-                            <input type="email" id="email" class="form-control" required>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-control">
                         </div>
                         
                         <div class="form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" class="form-control" required>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="message">Your Message</label>
-                            <textarea id="message" class="form-control" required></textarea>
+                            <textarea id="message" name="message" class="form-control" required></textarea>
                         </div>
                         
-                        <button type="submit" class="submit-btn">Send Message</button>
+                        <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -1197,59 +1549,137 @@
                     <div>
                         <h3>Resources</h3>
                         <ul>
-                            <li><a href="#">Prayer Requests</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Events</a></li>
+                            <li><a href="#contact">Prayer Requests</a></li>
+                            <li><a href="#videos">Latest Videos</a></li>
+                            <li><a href="#books">Publications</a></li>
+                            <li><a href="#channels">Teaching Series</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2025 Developed by calebdigitalconsult(+233 597064511). All Rights Reserved.</p>
+                <p>&copy; 2026 Developed by calebdigitalconsult (+233 597064511). All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
         // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            const navMenu = document.querySelector('nav ul');
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
         
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                window.scrollTo({
-                    top: targetSection.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu after clicking a link
-                if (window.innerWidth <= 768) {
-                    document.querySelector('nav ul').style.display = 'none';
-                }
-            });
+        mobileMenu.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            mobileMenu.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
         });
         
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
-            const navMenu = document.querySelector('nav ul');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            
             if (window.innerWidth <= 768 && 
-                navMenu.style.display === 'flex' && 
                 !navMenu.contains(e.target) && 
-                !mobileMenu.contains(e.target)) {
-                navMenu.style.display = 'none';
+                !mobileMenu.contains(e.target) && 
+                navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileMenu.innerHTML = '<i class="fas fa-bars"></i>';
             }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a, .footer-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu after clicking a link
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        mobileMenu.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+        
+        // Scroll animations
+        function checkScroll() {
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.85) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
+        // Form submission feedback
+        const contactForm = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                // You can add custom form validation here if needed
+                const originalText = submitBtn.textContent;
+                
+                // Show loading state
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Re-enable after 5 seconds in case of error
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 5000);
+            });
+        }
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
+            
+            if (currentScroll <= 0) {
+                header.style.transform = 'translateY(0)';
+                return;
+            }
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make hero section visible immediately
+            document.querySelector('.hero').classList.add('visible');
+            
+            // Add animation delay to cards
+            const cards = document.querySelectorAll('.video-card, .channel-card, .book-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
         });
     </script>
 </body>
